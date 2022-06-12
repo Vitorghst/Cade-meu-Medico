@@ -10,28 +10,34 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('pedro.vonrueden@example.com');
   const [password, setPassword] = useState('password');
 
-  useState(()=>{
-    const token = localStorage.getItem('token');
-    if(token !== null){
-      navigation.navigate('Index')
-    }
-  }, [localStorage]);
+
+  // COMENTEI POIS ESTÁ DANDO ERRO NO MEU LARAGON HERICSON, DEPOIS PRECISO VER COM VOCÊ, OBRIGADO!
+
+  // useState(()=>{
+  //   const token = localStorage.getItem('token');
+  //   if(token !== null){
+  //     navigation.navigate('Index')
+  //   }
+  // }, [localStorage]);
   
 
-  function singin() {
-    api.post('login', {
-      email: email,
-      password: password
-    }).then( async response => {
-      console.log(response.data);
-      const token = response.data.access_token;
-      localStorage.setItem('token', token);
-      //api.headers.Authorization = `Bearer ${token}`
-      navigation.navigate('Index')
-    }).catch(err => {
-      console.log(err)
-      alert('Usuario ou senha incorretos');
-    });
+  // function singin() {
+  //   api.post('login', {
+  //     email: email,
+  //     password: password
+  //   }).then( async response => {
+  //     console.log(response.data);
+  //     const token = response.data.access_token;
+  //     localStorage.setItem('token', token);
+  //     //api.headers.Authorization = `Bearer ${token}`
+  //     navigation.navigate('Index')
+  //   }).catch(err => {
+  //     console.log(err)
+  //     alert('Usuario ou senha incorretos');
+  //   });
+  // }
+  function Logar() {
+    navigation.navigate('Index')
   }
   function esqSenha() {
     navigation.navigate('EsqueceSenha')
@@ -72,7 +78,7 @@ export default function Login({ navigation }) {
         </View>
 
         <TouchableOpacity style={[styles.button, styles.backgroundButton]}
-          onPress={singin}>
+          onPress={Logar}>
           <Text style={styles.text}>Logar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}

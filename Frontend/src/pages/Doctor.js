@@ -1,50 +1,17 @@
 import React, { useState } from "react";
 import { View, Picker, StyleSheet, Text, SafeAreaView, Image,  ScrollView, TouchableOpacity} from "react-native"; 
 import { FontAwesome } from '@expo/vector-icons';
-import { Searchbar } from 'react-native-paper';
+import { Button, Searchbar } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel'
-import { FontAwesome5, MaterialIcons, Ionicons, Fontisto} from '@expo/vector-icons';
+import { FontAwesome5, MaterialIcons, Ionicons, Fontisto, AntDesign, Entypo} from '@expo/vector-icons';
 
+import doctor from '../assets/doctor.png'
 
-
-
-  const carouselItems = [
-    {
-      title: 'General Practitioner',
-      image:
-        'https://i.pinimg.com/originals/8f/29/79/8f29794f2a958c1ae1298291925a4da4.jpg',
-    },
-    {
-      title: 'Internal Medicine',
-      image:
-        'https://cdn.iconscout.com/icon/free/png-256/pill-1919732-1620243.png',
-    },
-    {
-      title: 'Pediatrician',
-      image:
-        'https://static.vecteezy.com/ti/vetor-gratis/p1/1932298-pacifier-baby-isolated-icon-vector-gr%C3%A1tis-vetor.jpg',
-    },
 
    
-  ];
-  function renderItem({item}) {
-    return (
-      <View style={styles.carouselItemContainer}>
-        <View style={styles.row}>
-        <Image
-          style={styles.carouselItemImage}
-          source={{uri: `${item.image}`}}
-        />
-        <Text style={styles.carouselItemTitle}>{item.title}</Text>
-        
-        </View>
-      </View>
-    );
-}
 
 
-
-export default function Index({ navigation }) {
+export default function Doctor({ navigation }) {
 
     const [selectedValue, setSelectedValue] = useState("java");
   //   function logout() {
@@ -61,58 +28,44 @@ export default function Index({ navigation }) {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollView}>
-        <Text style={styles.teste}>Location</Text>
-         <View style={styles.row}>
-        <Picker
-          selectedValue={selectedValue}
-          style={styles.select}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="Badung, Indonesia" value="Badung,Indonesia" />
-          <Picker.Item label="Paraná, Brasil" value="Paraná, Brasil" />
-        </Picker>
+        <Text style={styles.teste}>Doctor Detail</Text>
+        <View style={styles.row}>
         <FontAwesome style={styles.icon} name="bell" size={24} color="black" />
         </View>
-        <View>
-        <Text style={styles.first}>Good morning, Vitor!</Text>
-        <Text style={styles.second}>Find your doctor here</Text>
-        </View>
-        <View>
-        <Searchbar style={styles.input}
-        placeholder="Search a doctor"
-
-       />
-        <Carousel
-          layout={'default'}
-          layoutCardOffset={19}
-          data={carouselItems}
-          sliderWidth={350}
-          itemWidth={300}
-          renderItem={renderItem}
-        />
-        </View>
-        <View style={styles.grid}>
-        <View style={styles.row2}>
-        <Text style={styles.font}>Remember to always regulary check up your health with us</Text>
-        <View style={styles.screen}>
-        <FontAwesome5 name="heartbeat" size={50} color="white" />
-        </View>
-        </View>
-        <Text style={styles.font2}>#HealthWithUs</Text>
-       </View>
-       <View style={styles.row}>
-       <View style={styles.gridsecond}>
-        <Text style={styles.font3}>Consultation</Text>
-        <MaterialIcons style={styles.icon2} name="chat" size={90} color="#0ff702" />
-       </View>
-       <View style={styles.gridspecialist}>
-        <Text style={styles.font4}>Specialist</Text>
-        <Ionicons style={styles.icon2} name="compass" size={90} color="#10a2e6" />
-       </View>
-       </View>
-       <TouchableOpacity style={[styles.button, styles.backgroundButton]} onPress={()=>{navigation.navigate('Doctor')}}>
-          <Text><Fontisto name="doctor" size={24} color="black" />&nbsp;Click here to find a doctor</Text>
+        <TouchableOpacity style={[styles.button, styles.backgroundButton]} onPress={()=>{navigation.navigate('Index')}}>
+          <Text ><FontAwesome style={styles.iconarrow} name="arrow-left" size={20} color="grey" /></Text>
         </TouchableOpacity>  
+        <View style={styles.screen}>
+        <Image source={doctor} style={styles.image} />
+        </View>
+        <View>
+        <Text style={styles.second}>Dr. Ulrike Herz&nbsp;<MaterialIcons name="verified" size={24} color="blue" /></Text>
+        <Text style={styles.first}>General & Internal Medicine</Text>
+        <Text style={styles.reviews}><Ionicons name="star" size={24} color="#edd30e" />4.9 (284 Reviews)</Text>
+        </View>
+        <View>
+        </View>
+       <View style={styles.row}>
+       <View style={styles.grid}>
+        <Text style={styles.fontdoctor}><AntDesign name="message1" size={20} color="white" />&nbsp;&nbsp;Contact doctor</Text>
+       </View>
+       <View style={styles.gridbar}>
+       <Entypo style={styles.icon2} name="dots-three-vertical" size={24} color="grey" />
+       </View>
+       </View>
+       <View>
+        <Text style={styles.newgrid}>Stats</Text>
+        <Text style={styles.firstgrid}><FontAwesome name="university" size={24} color="blue" />&nbsp;&nbsp;Studies at The University of Melbourne</Text>
+        <Text style={styles.firstgrid}><Entypo name="graduation-cap" size={24} color="#edd30e" />&nbsp;&nbsp;Practicing at NYU Langone Hospitals</Text>
+        <Text style={styles.firstgrid}><FontAwesome name="user" size={24} color="#0ff702" />&nbsp;&nbsp;324 of Happy Patients</Text>
+        </View>
+        <View style={styles.row}>
+        <Text style={styles.newgrid}>Reviews(284)</Text>
+        <Text style={styles.viewAll}>View All</Text>
+        </View>
+        <View style={styles.grid2}>
+        <Text style={styles.font2}>Book an appointment</Text>
+       </View>
       </ScrollView>
       </SafeAreaView>
       
@@ -137,11 +90,10 @@ export default function Index({ navigation }) {
     borderWidth: 1,
     borderColor: '#DDD',
     paddingHorizontal: 10,
-    marginBottom: 3,
-    marginTop: 10,
+    marginBottom: 10,
     fontSize: 14,
     height: 45,
-    width: '90%',
+    width: '11%',
     textAlign: 'center',
     alignItems: 'center',
     marginLeft: 10,
@@ -152,14 +104,15 @@ export default function Index({ navigation }) {
     marginHorizontal: 0,
   },
   icon2: {
-    marginTop: 60,
-    marginLeft: 30,
+    marginLeft: 8,
+    marginTop: 8,
   },
   icondoctor: {
-    marginTop: 2,
     marginLeft: 10,
+    marginTop: 30,
   },
   screen: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -168,19 +121,29 @@ export default function Index({ navigation }) {
     alignItems: "center",
   },
   image: {
-    width: 60,
+    width: 150,
     paddingLeft: 10,
-    height: 60,
+    height: 150,
     borderRadius: 1000,
+  },
+  viewAll: {
+    marginTop: 30,
+    marginLeft: 200,
+    color: 'blue',
   },
   font: {
     color: 'white',
-    fontSize: 23,
-    marginRight: 10
+    fontSize: 16,
+    marginRight: 10,
+    marginBottom: 20,
+    marginLeft: 10
   },
   font2: {
     color: 'white',
-    fontSize: 5,
+    fontSize: 15,
+    marginLeft: 95,
+    marginRight: 5,
+    marginTop: 16
   },
   font3: {
     color: 'white',
@@ -190,10 +153,10 @@ export default function Index({ navigation }) {
   },
   fontdoctor: {
     color: 'white',
-    fontSize: 20,
-    marginLeft: 52,
-    marginTop: 15,
-    marginRight: 10
+    fontSize: 15,
+    marginLeft: 70,
+    marginRight: 5,
+    marginTop: 15
   },
   font4: {
     color: 'black',
@@ -219,31 +182,40 @@ export default function Index({ navigation }) {
     elevation: 20,
     shadowColor: 'black',
     color: 'white',
-    marginTop: 10,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-    paddingBottom: 10,
+    marginTop: 30,
+    width: 279,
+    height: 60,
     marginLeft: 20,
-    width: 360,
-    height: 155,
     marginRight: 20,
     borderRadius: 5,
     borderBottomWidth: 0
   },
-  gridsafe: {
-    backgroundColor: 'red',
+  gridbar: {
+    backgroundColor: 'white',
     elevation: 20,
     shadowColor: 'black',
     color: 'white',
-    marginTop: 10,
+    marginTop: 30,
     paddingTop: 10,
     paddingRight: 10,
     paddingLeft: 10,
     paddingBottom: 10,
+    width: 60,
+    height: 60,
+    marginRight: 50,
+    borderRadius: 5,
+    borderBottomWidth: 0
+
+  },
+  grid2: {
+    backgroundColor: '#10a2e6',
+    elevation: 20,
+    shadowColor: 'black',
+    color: 'white',
+    marginTop: 15,
+    width: 350,
+    height: 60,
     marginLeft: 20,
-    width: 360,
-    height: 80,
     marginRight: 20,
     borderRadius: 5,
     borderBottomWidth: 0
@@ -282,16 +254,38 @@ export default function Index({ navigation }) {
     borderBottomWidth: 0
   },
   first: {
-   marginTop: 55,
+   marginTop: 15,
    marginLeft: 9,
+   textAlign: 'center',
    color: 'grey'
 
   },
+  firstgrid: {
+    marginTop: 15,
+    marginLeft: 20,
+    color: 'grey',
+    justifyContent: 'space-between'
+ 
+   },
   second: {
-   fontWeight: 'bold',
+   marginTop: 30,
+   marginLeft: 9,
    fontSize: 30,
-   marginLeft: 8,
+   textAlign: 'center',
+   color: 'black'
   },
+  reviews: {
+    marginTop: 30,
+    marginLeft: 9,
+    fontSize: 15,
+    textAlign: 'center',
+    color: 'black'
+   },
+  newgrid: {
+    marginTop: 30,
+    marginLeft: 20,
+    color: 'grey',
+   },
   background: {
     flex: 1,
     left: 0,
@@ -300,9 +294,9 @@ export default function Index({ navigation }) {
     bottom: 0,
   },
   teste: {
-    marginLeft: 8,
     marginTop: 50,
-    color: 'grey'
+    color: 'black',
+    textAlign: 'center'
   },
   select: {
     height: 45,
@@ -316,9 +310,11 @@ export default function Index({ navigation }) {
   },
   row2: {
     flexDirection:"row",
+    marginTop: -5,
+    
   },
   icon: {
-    marginLeft: 150,
+    marginLeft: 350,
     color: 'grey'
   },
   carouselItemContainer: {

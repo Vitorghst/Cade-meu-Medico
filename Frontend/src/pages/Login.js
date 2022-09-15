@@ -6,6 +6,7 @@ import { Entypo, Feather, AntDesign, Fontisto } from '@expo/vector-icons';
 
 
 
+<<<<<<< HEAD
 
 export default class App extends React.Component {
   state = {
@@ -32,6 +33,36 @@ export default class App extends React.Component {
       this.setState({ batteryLevel });
       console.log('batteryLevel changed!', batteryLevel);
     });
+=======
+
+  // COMENTEI POIS ESTÁ DANDO ERRO NO MEU LARAGON HERICSON, DEPOIS PRECISO VER COM VOCÊ, OBRIGADO!
+
+  // useState(()=>{
+  //   const token = localStorage.getItem('token');
+  //   if(token !== null){
+  //     navigation.navigate('Index')
+  //   }
+  // }, [localStorage]);
+  
+
+  // function singin() {
+  //   api.post('login', {
+  //     email: email,
+  //     password: password
+  //   }).then( async response => {
+  //     console.log(response.data);
+  //     const token = response.data.access_token;
+  //     localStorage.setItem('token', token);
+  //     //api.headers.Authorization = `Bearer ${token}`
+  //     navigation.navigate('Index')
+  //   }).catch(err => {
+  //     console.log(err)
+  //     alert('Usuario ou senha incorretos');
+  //   });
+  // }
+  function Logar() {
+    navigation.navigate('Index')
+>>>>>>> 68f5f80c7ef5cfedd4482d3dfbf020f83aea52e0
   }
 
   _unsubscribe() {
@@ -52,6 +83,7 @@ export default class App extends React.Component {
                 </TouchableOpacity>
         <Text style={styles.paragraph}>
 
+<<<<<<< HEAD
           {this.state.batteryLevel ? ` ${Math.round(this.state.batteryLevel * 100)}%` : 'Battery Level: Unknown'}
         </Text>
         <View style={styles.battery}>
@@ -65,6 +97,23 @@ export default class App extends React.Component {
 
     );
   }
+=======
+        <TouchableOpacity style={[styles.button, styles.backgroundButton]}
+          onPress={Logar}>
+          <Text style={styles.text}>Logar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}
+          onPress={Cadastrar}>
+          <Text style={styles.text}>Faça seu cadastro!</Text>
+        </TouchableOpacity >
+        <TouchableOpacity style={styles.esqueci}
+          onPress={esqSenha}>
+          <Text style={styles.text}>Esqueci minha senha</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    </View>
+  );
+>>>>>>> 68f5f80c7ef5cfedd4482d3dfbf020f83aea52e0
 }
 
 const styles = StyleSheet.create({

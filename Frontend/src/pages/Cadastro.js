@@ -28,9 +28,6 @@ export default function Cadastro({ navigation }) {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={['#0E5CBB', '#2E75E7']}
-        style={styles.background}>
         <ScrollView style={styles.scrollView}>
         <Image source={logo} style={styles.logo} />
         <View style={styles.formGroup}>
@@ -116,12 +113,11 @@ export default function Cadastro({ navigation }) {
         <TouchableOpacity style={[styles.button, styles.backgroundButton]}>
           <Text style={styles.text} onPress={cadatrarUsuario}>Cadastrar-se</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
+        <TouchableOpacity style={[styles.button, styles.backgroundButton ]}
          onPress={()=>{navigation.navigate('Login')}}>
           <Text style={styles.text}>Voltar</Text>
         </TouchableOpacity>
         </ScrollView>
-      </LinearGradient>
     </SafeAreaView>
   );
 }
@@ -144,10 +140,12 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    marginBottom: 20,
+    marginLeft: 140,
+    marginTop: 50,
+    marginBottom: 40,
   },
   formGroup: {
-    width: '70%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'baseline',
   },
@@ -167,11 +165,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: '#DDD',
+    marginLeft: 20,
     paddingHorizontal: 20,
     marginBottom: 10,
     fontSize: 14,
-    height: 45,
-    width: '100%',
+    height: 55,
+    width: '90%',
     borderRadius: 5
   },
   button: {
@@ -180,6 +179,7 @@ const styles = StyleSheet.create({
     borderColor: '#DDD',
     paddingHorizontal: 20,
     marginBottom: 10,
+    marginLeft: 50,
     fontSize: 14,
     height: 45,
     width: '70%',
@@ -201,13 +201,8 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   scrollView: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    backgroundColor: 'transparent',
-    marginHorizontal: 20,
-    left: 0,
-    right: 0
+    backgroundColor: 'white',
+    backgroundColor: '#0E5CBB',
+    marginHorizontal: 0,
   },
 });

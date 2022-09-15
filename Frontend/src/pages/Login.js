@@ -1,140 +1,111 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
-import api from '../services/api'
+import * as React from 'react';
+import * as Battery from 'expo-battery';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Camera, CameraType, FlashMode } from 'expo-camera';
+import { Entypo, Feather, AntDesign, Fontisto } from '@expo/vector-icons';
 
-import logo from '../assets/logo.png';
-import EsqueceSenha from "./EsqueceSenha";
 
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState('pedro.vonrueden@example.com');
-  const [password, setPassword] = useState('password');
 
-  useState(()=>{
-    const token = localStorage.getItem('token');
-    if(token !== null){
-      navigation.navigate('Index')
-    }
-  }, [localStorage]);
-  
 
-  function singin() {
-    api.post('login', {
-      email: email,
-      password: password
-    }).then( async response => {
-      console.log(response.data);
-      const token = response.data.access_token;
-      localStorage.setItem('token', token);
-      //api.headers.Authorization = `Bearer ${token}`
-      navigation.navigate('Index')
-    }).catch(err => {
-      console.log(err)
-      alert('Usuario ou senha incorretos');
+export default class App extends React.Component {
+  state = {
+    batteryLevel: null,
+
+  };
+
+  navigation = () => {
+    this.props.navigation.navigate('Index')
+  }
+
+  componentDidMount() {
+    this._subscribe();
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
+  async _subscribe() {
+    const batteryLevel = await Battery.getBatteryLevelAsync();
+    this.setState({ batteryLevel });
+    this._subscription = Battery.addBatteryLevelListener(({ batteryLevel }) => {
+      this.setState({ batteryLevel });
+      console.log('batteryLevel changed!', batteryLevel);
     });
   }
-  function esqSenha() {
-    navigation.navigate('EsqueceSenha')
+
+  _unsubscribe() {
+    this._subscription && this._subscription.remove();
+    this._subscription = null;
   }
 
-  function Cadastrar() {
-    navigation.navigate('Cadastro')
-  }
-  return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={['#0E5CBB', '#2E75E7']}
-        style={styles.background}>
-        <Image source={logo} style={styles.logo} />
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>E-mail</Text>
-          <TextInput style={styles.input}
-            keyboardType="email-address"
-            placeholder="E-mail"
-            placeholderTextColor="#999"
-            autoCapitalize='none'
-            autoCorrect={false}
-            onChangeText={setEmail}
-            required={true}
-          ></TextInput>
-        </View>
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Senha</Text>
-          <TextInput style={styles.input}
-            secureTextEntry={true}
-            keyboardType="visible-password"
-            placeholder="Digite sua Senha:"
-            placeholderTextColor="#999"
-            autoCapitalize='none'
-            autoCorrect={false}
-            onChangeText={setPassword}
-          ></TextInput>
-        </View>
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+                  style={{
+                    marginBottom: 50,
+                  }}
+                  onPress={()=>this.navigation()}
+                  >
+                  <AntDesign name="camera" size={50} color="black" />
+                </TouchableOpacity>
+        <Text style={styles.paragraph}>
 
-        <TouchableOpacity style={[styles.button, styles.backgroundButton]}
-          onPress={singin}>
-          <Text style={styles.text}>Logar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
-          onPress={Cadastrar}>
-          <Text style={styles.text}>Faça seu cadastro!</Text>
-        </TouchableOpacity >
-        <TouchableOpacity style={styles.esqueci}
-          onPress={esqSenha}>
-          <Text style={styles.text}>Esqueci minha senha</Text>
-        </TouchableOpacity>
-      </LinearGradient>
-    </View>
-  );
+          {this.state.batteryLevel ? ` ${Math.round(this.state.batteryLevel * 100)}%` : 'Battery Level: Unknown'}
+        </Text>
+        <View style={styles.battery}>
+          <View style={styles.batteryLevel}>
+            <View style={{ backgroundColor: this.state.batteryLevel > 0.5 ? 'green' : this.state.batteryLevel > 0.2 ? 'orange' : 'red', width: `${this.state.batteryLevel * 100}%`, height: 30, }}></View>
+            <View style={styles.batteryicon}>
+            </View>
+          </View>
+        </View>
+      </View>
+
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  background: {
-    flex: 1,
+    marginTop: 20,
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
+    backgroundColor: '#F5FCFF',
   },
-  logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
-  },
-  formGroup: {
-    width: '70%',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-  },
-  label: {
-    color: '#fff',
-    fontSize: 10,
-    backgroundColor: "#4DCFE0",
-    paddingHorizontal: 15,
-    paddingVertical: 0,
-    lineHeight: 20,
+  // de acordo com o nível da bateria, a cor de fundo muda
+  battery: {
+    width: 100,
+    height: 50,
     borderRadius: 5,
-    zIndex: 10,
-    marginLeft: 10,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  input: {
-    marginTop: -10,
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: '#DDD',
-    paddingHorizontal: 20,
-    marginBottom: 10,
-    fontSize: 14,
-    height: 45,
-    width: '100%',
-    borderRadius: 5
+  batteryLevel: {
+    width: 80,
+    height: 30,
+    backgroundColor: '#fff',
   },
+
+  batteryicon: {
+    width: 15,
+    height: 20,
+    marginLeft: 90,
+    marginTop: -24,
+    marginRight: 0,
+    borderRadius: 5,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  progressBar: {
+    color: '#4DCFE0',
+    fontSize: 100
+  },
+
   button: {
     justifyContent: 'center',
     borderWidth: 1,
@@ -148,17 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5
   },
-  backgroundButton: {
-    backgroundColor: "#4DCFE0",
-    borderColor: 'transparent',
-    marginTop: 30,
-  },
-  text: {
-    backgroundColor: 'transparent',
-    color: '#fff',
-  },
-  esqueci: {
-    position: 'absolute',
-    bottom: 10,
-  }
-});
+
+}
+);
+

@@ -48,7 +48,8 @@ export default class Login extends React.Component {
   takePicture = async () => {
     if (this.camera) {
       let photo = await this.camera.takePictureAsync();
-
+      MediaLibrary.saveToLibraryAsync(photo.uri);
+      
 
     }
   }
@@ -57,8 +58,11 @@ export default class Login extends React.Component {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images
 
+
     });
   }
+
+
   
 
   render(){

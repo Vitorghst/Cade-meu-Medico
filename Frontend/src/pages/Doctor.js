@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Picker, StyleSheet, Text, SafeAreaView, Image,  ScrollView, TouchableOpacity} from "react-native"; 
 import { FontAwesome } from '@expo/vector-icons';
 import { Button, Searchbar } from 'react-native-paper';
-import Carousel from 'react-native-snap-carousel'
 import { FontAwesome5, MaterialIcons, Ionicons, Fontisto, AntDesign, Entypo} from '@expo/vector-icons';
 
 import doctor from '../assets/doctor.png'
